@@ -1,5 +1,6 @@
+<?xml version="1.0"?>
 <openbox_config xmlns="http://openbox.org/3.4/rc" xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--
+  <!--
 # 😉 Crédito: Felipe Facundes
 #  Telegram: @FeFacundes
 #  Telegram Group: t.me/winehq_linux
@@ -47,7 +48,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>FF-BlendColors-GrayTones</name>
+    <name>KDE</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -62,57 +63,57 @@
     <keepBorder>yes</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
-      <name>sans</name>
-      <size>9</size>
+      <name>Sans</name>
+      <size>12</size>
+      <!-- font size in points -->
+      <weight>Normal</weight>
+      <!-- 'bold' or 'normal' -->
+      <slant>Normal</slant>
+      <!-- 'italic' or 'normal' -->
+    </font>
+    <font place="InactiveWindow">
+      <name>Sans</name>
+      <size>8</size>
       <!-- font size in points -->
       <weight>Bold</weight>
       <!-- 'bold' or 'normal' -->
       <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
-    <font place="InactiveWindow">
-      <name>sans</name>
-      <size>8</size>
-      <!-- font size in points -->
-      <weight>bold</weight>
-      <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
-      <!-- 'italic' or 'normal' -->
-    </font>
     <font place="MenuHeader">
-      <name>sans</name>
-      <size>9</size>
+      <name>Sans</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>normal</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
+      <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuItem">
-      <name>sans</name>
-      <size>9</size>
+      <name>Sans</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>normal</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
+      <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>sans</name>
-      <size>9</size>
+      <name>Sans</name>
+      <size>11</size>
       <!-- font size in points -->
-      <weight>bold</weight>
+      <weight>Normal</weight>
       <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
+      <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>sans</name>
+      <name>Sans</name>
       <size>9</size>
       <!-- font size in points -->
-      <weight>bold</weight>
+      <weight>Bold</weight>
       <!-- 'bold' or 'normal' -->
-      <slant>normal</slant>
+      <slant>Normal</slant>
       <!-- 'italic' or 'normal' -->
     </font>
   </theme>
@@ -191,7 +192,7 @@
     <chainQuitKey>C-g</chainQuitKey>
     <keybind key="A-F1">
       <action name="Execute">
-        <command>jgmenu</command>
+        <command>bash -c "rm ~/.jgmenu-lockfile ; jgmenu"</command>
       </action>
     </keybind>
     <keybind key="W-x">
@@ -236,7 +237,7 @@
     </keybind>
     <keybind key="C-W-f">
       <action name="Execute">
-        <command>bash -c 'firefox=&quot;$(pidof firefox)&quot; ; if [ -e $firefox ]; then firefox; else echo no; fi'</command>
+        <command>bash -c 'firefox #="$(pidof firefox)" ; if [ -e $firefox ]; then firefox; else echo no; fi'</command>
         <startupnotify>
           <enabled>yes</enabled>
           <wmclass>firefox</wmclass>
@@ -247,7 +248,7 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>bash -c 'firefox=&quot;$(pidof firefox)&quot; ; if [ -e $firefox ]; then firefox; else echo no; fi'</command>
+        <command>bash -c 'firefox="$(pidof firefox)" ; if [ -e $firefox ]; then firefox; else echo no; fi'</command>
         <startupnotify>
           <enabled>yes</enabled>
           <wmclass>firefox</wmclass>
@@ -285,7 +286,12 @@
     </keybind>
     <keybind key="C-A-r">
       <action name="Execute">
-        <command>bash -c 'sakura -e ffmpeg -video_size 1360x768 -framerate 25 -f x11grab -i :1.0 -f pulse -ac 2 -i default &quot;/home/$USER/Videos/Tela_$(date +&quot;%d-%m-%Y_%H:%M:%S&quot;).mp4&quot;'</command>
+        <command>bash -c 'sakura -e ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -re -i "$DISPLAY" -f pulse -ac 2 -i default -ar 22050 -c:a libmp3lame -c:v libx264 -bsf:v h264_mp4toannexb -max_muxing_queue_size 9999 -f mp4 -movflags frag_keyframe+empty_moov "/home/$USER/Vídeos/HD/Tela_$(date +"%d-%m-%Y_%H:%M:%S").mp4"'</command>
+      </action>
+    </keybind>
+    <keybind key="C-A-s">
+      <action name="Execute">
+        <command>bash -c 'sakura -e ffmpeg -video_size 1920x1080 -f x11grab -re -i "$DISPLAY" -f pulse -ac 2 -i default -ar 22050 -c:a libmp3lame -c:v libx264 -preset ultrafast -tune zerolatency -maxrate 10000k -bufsize 20000k -pix_fmt yuv420p -framerate 25 -g 52 -max_muxing_queue_size 9999 -f mp4 -bsf:v h264_mp4toannexb -movflags frag_keyframe+empty_moov "/home/$USER/Vídeos/HD/Tela_$(date +"%d-%m-%Y_%H:%M:%S").mp4"'</command>
       </action>
     </keybind>
     <keybind key="S-A-r">
@@ -306,17 +312,17 @@
     </keybind>
     <keybind key="XF86AudioMute">
       <action name="Execute">
-        <command>pactl set-sink-mute 0 toggle</command>
+        <command>bash -c "pactl set-sink-mute 0 toggle ; pactl set-sink-mute 4 toggle"</command>
       </action>
     </keybind>
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
-        <command>pactl set-sink-volume 0 -5%</command>
+        <command>bash -c "pactl set-sink-volume 0 -5% ; pactl set-sink-volume 4 -5%"</command>
       </action>
     </keybind>
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
-        <command>pactl set-sink-volume 0 +5%</command>
+        <command>bash -c "pactl set-sink-volume 0 +5% ; pactl set-sink-volume 4 +5%"</command>
       </action>
     </keybind>
     <keybind key="XF86MonBrightnessDown">
@@ -331,53 +337,53 @@
     </keybind>
     <keybind key="XF86ScreenSaver">
       <action name="Execute">
-        <command>bash -c &quot;echo 0 &gt; /sys/class/backlight/intel_backlight/brightness&quot;</command>
+        <command>bash -c "echo 0 &gt; /sys/class/backlight/intel_backlight/brightness"</command>
       </action>
     </keybind>
     <keybind key="Print">
       <action name="Execute">
-        <command>bash -c 'cd ~/ ; mkdir -p &quot;$HOME/Imagens/Captura de Tela/&quot; ; scrot &quot;$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png&quot; ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
+        <command>bash -c 'cd ~/ ; mkdir -p "$HOME/Imagens/Captura de Tela/" ; scrot "$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png" ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
       </action>
     </keybind>
     <keybind key="S-Print">
       <action name="Execute">
-        <command>bash -c 'cd ~/ ; mkdir -p &quot;$HOME/Imagens/Captura de Tela/&quot; ; scrot -d 4 &quot;$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png&quot; ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
+        <command>bash -c 'cd ~/ ; mkdir -p "$HOME/Imagens/Captura de Tela/" ; scrot -d 4 "$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png" ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
       </action>
     </keybind>
     <keybind key="A-Print">
       <action name="Execute">
-        <command>bash -c 'cd ~/ ; mkdir -p &quot;$HOME/Imagens/Captura de Tela/&quot; ; scrot -s &quot;$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png&quot;'</command>
+        <command>bash -c 'cd ~/ ; mkdir -p "$HOME/Imagens/Captura de Tela/" ; scrot -s "$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png"'</command>
       </action>
     </keybind>
     <keybind key="C-Print">
       <action name="Execute">
-        <command>bash -c 'cd ~/ ; mkdir -p &quot;$HOME/Imagens/Captura de Tela/&quot; ; scrot -u &quot;$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png&quot; ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
+        <command>bash -c 'cd ~/ ; mkdir -p "$HOME/Imagens/Captura de Tela/" ; scrot -u "$HOME/Imagens/Captura de Tela/Captura de tela de %d-%m-%Y %H:%M:%S.png" ; mkdir -p ~/.local/songs/ ; cd ~/.local/songs/ ; wget -nc https://github.com/felipefacundes/dotfiles/blob/master/config/songs/camera_shutter.mp3?raw=true -O camera_shutter.mp3 ; paplay ~/.local/songs/camera_shutter.ogg'</command>
       </action>
     </keybind>
     <keybind key="C-A-w">
       <action name="Execute">
-        <command>bash -c 'cd ~/ ; mkdir -p ~/Imagens/Wallpapers/ ; nitrogen --set-zoom-fill &quot;$(ls &quot;$HOME&quot;/Imagens/Wallpapers/*[jJpP][nNpP][gG] | shuf -n 1)&quot;'</command>
+        <command>bash -c 'cd ~/ ; mkdir -p ~/Imagens/Wallpapers/ ; nitrogen --set-zoom-fill "$(ls "$HOME"/Imagens/Wallpapers/*[jJpP][nNpP][gG] | shuf -n 1)"'</command>
       </action>
     </keybind>
     <keybind key="C-S-A-d">
       <action name="Execute">
-        <command>bash -c &quot;/bin/openrc-shutdown --poweroff now ; systemctl -i poweroff&quot;</command>
+        <command>bash -c "/bin/openrc-shutdown --poweroff now ; systemctl -i poweroff"</command>
       </action>
     </keybind>
     <keybind key="C-S-A-BackSpace">
       <action name="Execute">
-        <command>bash -c &quot;/bin/openrc-shutdown --reboot now ; systemctl -i reboot&quot;</command>
+        <command>bash -c "/bin/openrc-shutdown --reboot now ; systemctl -i reboot"</command>
       </action>
     </keybind>
     <keybind key="C-A-q">
       <action name="Execute">
-        <command>watch -g pkill -9 -u &quot;$USER&quot;</command>
+        <command>watch -g pkill -9 -u "$USER"</command>
         <prompt>Matar todos os programas abertos?</prompt>
       </action>
     </keybind>
     <keybind key="C-A-Delete">
       <action name="Execute">
-        <command>watch -g pkill -9 -u &quot;$USER&quot;</command>
+        <command>watch -g pkill -9 -u "$USER"</command>
       </action>
     </keybind>
     <keybind key="C-A-Escape">
@@ -392,7 +398,7 @@
     </keybind>
     <keybind key="W-u">
       <action name="Execute">
-        <command>bash -c &quot;sakura -m -e sudo pacman -Syyu --noconfirm; sudo mkinitcpio -P; sudo grub-mkconfig -o /boot/grub/grub.cfg&quot;</command>
+        <command>bash -c "sakura -m -e sudo pacman -Syyu --noconfirm; sudo mkinitcpio -P; sudo grub-mkconfig -o /boot/grub/grub.cfg"</command>
       </action>
     </keybind>
     <keybind key="C-W-o">
@@ -430,7 +436,15 @@
       <action name="UnmaximizeFull"/>
       <action name="MoveToEdgeEast"/>
     </keybind>
+    <keybind key="C-W-Right">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveToEdgeEast"/>
+    </keybind>
     <keybind key="C-W-k">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveToEdgeSouth"/>
+    </keybind>
+    <keybind key="C-W-Down">
       <action name="UnmaximizeFull"/>
       <action name="MoveToEdgeSouth"/>
     </keybind>
@@ -438,11 +452,27 @@
       <action name="UnmaximizeFull"/>
       <action name="MoveToEdgeNorth"/>
     </keybind>
+    <keybind key="C-W-Up">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveToEdgeNorth"/>
+    </keybind>
     <keybind key="C-W-j">
       <action name="UnmaximizeFull"/>
       <action name="MoveToEdgeWest"/>
     </keybind>
+    <keybind key="C-W-Left">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveToEdgeWest"/>
+    </keybind>
     <keybind key="A-W-l">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+      <action name="MoveToEdgeEast"/>
+    </keybind>
+    <keybind key="A-W-Right">
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
         <width>50%</width>
@@ -458,7 +488,23 @@
       </action>
       <action name="MoveToEdgeSouth"/>
     </keybind>
+    <keybind key="A-W-Down">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+      <action name="MoveToEdgeSouth"/>
+    </keybind>
     <keybind key="A-W-i">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+      <action name="MoveToEdgeNorth"/>
+    </keybind>
+    <keybind key="A-W-Up">
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
         <width>50%</width>
@@ -474,7 +520,23 @@
       </action>
       <action name="MoveToEdgeWest"/>
     </keybind>
+    <keybind key="A-W-Left">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+      <action name="MoveToEdgeWest"/>
+    </keybind>
     <keybind key="S-A-W-l">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>25%</width>
+        <height>25%</height>
+      </action>
+      <action name="MoveToEdgeEast"/>
+    </keybind>
+    <keybind key="S-A-W-Right">
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
         <width>25%</width>
@@ -490,7 +552,23 @@
       </action>
       <action name="MoveToEdgeSouth"/>
     </keybind>
+    <keybind key="S-A-W-Down">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>25%</width>
+        <height>25%</height>
+      </action>
+      <action name="MoveToEdgeSouth"/>
+    </keybind>
     <keybind key="S-A-W-i">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>25%</width>
+        <height>25%</height>
+      </action>
+      <action name="MoveToEdgeNorth"/>
+    </keybind>
+    <keybind key="S-A-W-Up">
       <action name="UnmaximizeFull"/>
       <action name="MoveResizeTo">
         <width>25%</width>
@@ -506,16 +584,36 @@
       </action>
       <action name="MoveToEdgeWest"/>
     </keybind>
+    <keybind key="S-A-W-Left">
+      <action name="UnmaximizeFull"/>
+      <action name="MoveResizeTo">
+        <width>25%</width>
+        <height>25%</height>
+      </action>
+      <action name="MoveToEdgeWest"/>
+    </keybind>
     <keybind key="A-l">
+      <action name="DirectionalFocusEast"/>
+    </keybind>
+    <keybind key="A-Right">
       <action name="DirectionalFocusEast"/>
     </keybind>
     <keybind key="A-k">
       <action name="DirectionalFocusSouth"/>
     </keybind>
+    <keybind key="A-Down">
+      <action name="DirectionalFocusSouth"/>
+    </keybind>
     <keybind key="A-i">
       <action name="DirectionalFocusNorth"/>
     </keybind>
+    <keybind key="A-Up">
+      <action name="DirectionalFocusNorth"/>
+    </keybind>
     <keybind key="A-j">
+      <action name="DirectionalFocusWest"/>
+    </keybind>
+    <keybind key="A-Left">
       <action name="DirectionalFocusWest"/>
     </keybind>
     <keybind key="W-v">
@@ -612,7 +710,15 @@
       <action name="UnmaximizeFull"/>
       <action name="GrowToEdgeEast"/>
     </keybind>
+    <keybind key="W-Right">
+      <action name="UnmaximizeFull"/>
+      <action name="GrowToEdgeEast"/>
+    </keybind>
     <keybind key="W-k">
+      <action name="UnmaximizeFull"/>
+      <action name="GrowToEdgeSouth"/>
+    </keybind>
+    <keybind key="W-Down">
       <action name="UnmaximizeFull"/>
       <action name="GrowToEdgeSouth"/>
     </keybind>
@@ -620,7 +726,15 @@
       <action name="UnmaximizeFull"/>
       <action name="GrowToEdgeNorth"/>
     </keybind>
+    <keybind key="W-Up">
+      <action name="UnmaximizeFull"/>
+      <action name="GrowToEdgeNorth"/>
+    </keybind>
     <keybind key="W-j">
+      <action name="UnmaximizeFull"/>
+      <action name="GrowToEdgeWest"/>
+    </keybind>
+    <keybind key="W-Left">
       <action name="UnmaximizeFull"/>
       <action name="GrowToEdgeWest"/>
     </keybind>
@@ -1236,10 +1350,9 @@
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
-    <!-- orage does get decorations though.
-       calender app, see http://www.xfce.org/projects/orage/ -->
-    <application class="Orage">
-      <decor>yes</decor>
+    <!-- match all windows, and remove their decorations -->
+    <application class="*">
+      <decor>no</decor>
     </application>
     <!-- my xterm with screen in it must always be on desktop 2,
        maximized and below everything else -->
